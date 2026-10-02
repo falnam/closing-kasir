@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Closing Kasir</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">DAILY CASH CLOSING</div>
+        <h1>Closing Kasir</h1>
+        <p>Catat penjualan, QRIS/transfer, pajak, pengeluaran, dan kas fisik setiap hari.</p>
+      </div>
+      <button class="secondary" id="exportBtn">Export CSV</button>
+    </header>
+
+    <main>
+      <section class="cards">
+        <div class="card"><span>Omzet Hari Ini</span><strong id="sumOmzet">Rp0</strong></div>
+        <div class="card"><span>Cash Seharusnya</span><strong id="sumExpected">Rp0</strong></div>
+        <div class="card"><span>Cash Aktual</span><strong id="sumActual">Rp0</strong></div>
+        <div class="card"><span>Selisih</span><strong id="sumVariance">Rp0</strong></div>
+      </section>
+
+      <div class="grid">
+        <section class="panel">
+          <div class="panel-title">
+            <div>
+              <h2>Closing Hari Ini</h2>
+              <p>Isi angka sesuai bill dan nota pengeluaran.</p>
+            </div>
+            <button class="secondary" id="resetBtn">Reset Form</button>
+          </div>
+
+          <form id="closingForm">
+            <div class="row">
+              <label>Tanggal
+                <input type="date" id="date" required>
+              </label>
+              <label>Nama kasir
+                <input type="text" id="cashier" placeholder="Contoh: Ade" required>
+              </label>
+            </div>
+
+            <h3>Penjualan</h3>
+            <div class="row">
+              <label>Penjualan tunai
+                <input type="number" id="cashSales" min="0" step="100" value="0">
+              </label>
+              <label>QRIS / Transfer
+                <input type="number" id="qris" min="0" step="100" value="0">
+              </label>
+            </div>
+
+            <div class="calculation">
+              <span>Total omzet</span>
+              <strong id="omzet">Rp0</strong>
+            </div>
+
+            <h3>Pajak</h3>
+            <div class="row">
+              <label>Pajak diambil dari kas
+                <input type="number" id="tax" min="0" step="100" value="0">
+              </label>
+              <label>Keterangan pajak
+                <input type="text" id="taxNote" placeholder="Contoh: pajak hari ini sudah disetor">
+              </label>
+            </div>
+
+            <h3>Pengeluaran</h3>
+            <div id="expenseList"></div>
+            <button type="button" class="add" id="addExpense">+ Tambah pengeluaran</button>
+
+            <div class="calculation">
+              <span>Total pengeluaran</span>
+              <strong id="expenseTotal">Rp0</strong>
+            </div>
+
+            <h3>Kas Fisik</h3>
+            <div class="row">
+              <label>Saldo awal / uang lama
+                <input type="number" id="openingCash" min="0" step="100" value="0">
+              </label>
+              <label>Cash di luar laci
+                <input type="number" id="outsideCash" min="0" step="100" value="0">
+              </label>
+            </div>
+            <div class="row">
+              <label>Uang di laci
+                <input type="number" id="drawerCash" min="0" step="100" value="0">
+              </label>
+              <label>Uang lain yang belum dihitung
+                <input type="number" id="untrackedCash" min="0" step="100" value="0">
+              </label>
+            </div>
+
+            <div class="calculation">
+              <span>Cash aktual yang dihitung</span>
+              <strong id="actualCash">Rp0</strong>
+            </div>
+            <div class="calculation">
+              <span>Cash seharusnya</span>
+              <strong id="expectedCash">Rp0</strong>
+            </div>
+            <div class="calculation highlight">
+              <span>Selisih kas</span>
+              <strong id="variance">Rp0</strong>
+            </div>
+
+            <label>Keterangan closing
+              <textarea id="note" rows="3" placeholder="Contoh: ada uang lama di laci, pajak sudah diambil, ada pengeluaran..."></textarea>
+            </label>
+
+            <button class="primary" type="submit">Simpan Closing</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <div>
+              <h2>Riwayat Closing</h2>
+              <p>Tersimpan di browser perangkat ini.</p>
+            </div>
+            <button class="danger" id="clearBtn">Hapus Semua</button>
+          </div>
+          <div id="history"></div>
+        </section>
+      </div>
+    </main>
+    <footer>Closing Kasir • Data lokal di browser • Gunakan Export CSV sebagai backup.</footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
